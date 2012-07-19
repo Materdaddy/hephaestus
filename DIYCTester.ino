@@ -3,12 +3,14 @@
 //TODO: Design custom shield
 
 // include the library code:
-#include <Wire.h>
-#include <EEPROM.h>
-#include <Adafruit_MCP23017.h>
-#include <Adafruit_RGBLCDShield.h>
+//#include <Wire.h>
+//#include <EEPROM.h>
+//#include <Adafruit_MCP23017.h>
+//#include <Adafruit_RGBLCDShield.h>
 
-#include "DIYCTester.h"
+#include "DIYCVars.h"
+#include "DIYCSettings.h"
+#include "ChannelSettings.h"
 
 // These #defines make it easy to set the backlight color
 #define RED 0x1
