@@ -1,11 +1,14 @@
+//TODO: Debouncing
+//TODO: Store values in EEPROM
+//TODO: Design custom shield
+
 // include the library code:
 #include <Wire.h>
+#include <EEPROM.h>
 #include <Adafruit_MCP23017.h>
 #include <Adafruit_RGBLCDShield.h>
 
 #include "DIYCTester.h"
-#include "RenardIn.h"
-#include "RenardOut.h"
 
 // These #defines make it easy to set the backlight color
 #define RED 0x1
@@ -16,58 +19,49 @@
 #define TEAL 0x6
 #define WHITE 0x7
 
-DIYCTester *diyc = NULL;
+DIYCSettings *settings;
 
 void setup() {
   // set up the LCD's number of rows and columns: 
   Serial.begin(57600);
+  Serial.print("Hello diyc.com!");
 
-  DIYCVars *vars = new DIYCVars;
-  delay(500);
-  diyc = new RenardIn(vars);
+  settings = new ChannelSettings(new DIYCVars());
 }
 
 void loop() {
-  uint8_t buttons = diyc->getVars()->getLcd()->readButtons();
-  DIYCTester *new_diyc = diyc;
+  uint8_t buttons = settings->getVars()->getLcd()->readButtons();
+  DIYCSettings *new_settings = settings;
+
+  // TODO: Fancy debouncing of the buttons.
+  delay(150);
 
   if (buttons) {
-    delay(100);
     if (buttons & BUTTON_UP) {
-      new_diyc = diyc->mUpAction();
       Serial.println("UP");
+      new_settings = settings->upAction();
     }
     if (buttons & BUTTON_DOWN) {
-      new_diyc = diyc->mDownAction();
       Serial.println("DOWN");
+      new_settings = settings->downAction();
     }
     if (buttons & BUTTON_LEFT) {
-      new_diyc = diyc->mLeftAction();
       Serial.println("LEFT");
+      new_settings = settings->leftAction();
     }
     if (buttons & BUTTON_RIGHT) {
-      new_diyc = diyc->mRightAction();
       Serial.println("RIGHT");
+      new_settings = settings->rightAction();
     }
     if (buttons & BUTTON_SELECT) {
-      new_diyc = diyc->mSelectAction();
       Serial.println("SELECT");
+      new_settings = settings->selectAction();
     }
   }
-
-  if ( new_diyc != diyc )
-  {
-    delete diyc;
-    diyc = new_diyc;
-    new_diyc = NULL;
-  }
   
-  new_diyc = diyc->mLoop();
-
-  if ( new_diyc != diyc )
+  if ( new_settings != settings )
   {
-    delete diyc;
-    diyc = new_diyc;
-    new_diyc = NULL;
+    delete settings;
+    settings = new_settings;
   }
 }
