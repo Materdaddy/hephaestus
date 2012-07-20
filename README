@@ -4,11 +4,11 @@ Chase Speed					numbers
 Output Pattern				all on, all off, fades, groups				
 	(if set to pattern)													
 Current Channel				Numbers 1-max_channel						done
-	(if set to manual)													
-Num Channels				d:512?										
-Max Dimming Value			d:255, 1 - 255								
-Min Dimming Value			d:0, 0 - 254								
-Output Protocol				DMX/Renard									
+	(if set to manual)													done
+Num Channels				d:24										done
+Max Dimming Value			d:255										done
+Min Dimming Value			d:0											done
+Output Protocol				DMX/Renard									done
 Baud Rate					192/384/576/1152/DMX						
 EEPROM Save					yes											
 EEPROM Read					yes (just a reset?)							
@@ -17,3 +17,4 @@ TODO:
 * Main loop that acts on settings held in DIYCVars
 * Board Layout
 * SSR Functionality
+* Wrap settings on overflow?

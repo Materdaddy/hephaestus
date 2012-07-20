@@ -29,10 +29,11 @@ typedef struct packed_s
 {
   uint8_t protocol;
   uint8_t outputType;
-  uint8_t numChannels;
-  uint8_t channel;
+  uint16_t numChannels;
+  uint16_t channel;
   uint8_t baudRate;
-  uint8_t eventPeriod;
+  uint8_t maxDimming;
+  uint8_t minDimming;
 } packed_t;
 
 class DIYCVars
@@ -42,32 +43,37 @@ public:
   ~DIYCVars();
 
   void printSettings();
-  int saveToEeprom();
+  void saveToEeprom();
+
+  uint16_t maxChannelsThisBaud();
 
   // getters
   uint8_t getProtocol() { return mProtocol; }
   uint8_t getOutputType() { return mOutputType; }
-  uint8_t getNumChannels() { return mNumChannels; }
-  uint8_t getChannel() { return mChannel; }
+  uint16_t getNumChannels() { return mNumChannels; }
+  uint16_t getChannel() { return mChannel; }
   uint8_t getBaud() { return mBaudRate; }
-  uint8_t getEventPeriod() { return mEventPeriod; }
+  uint8_t getMaxDimming() { return mMaxDimming; }
+  uint8_t getMinDimming() { return mMinDimming; }
   Adafruit_RGBLCDShield *getLcd() { return mLcd; }
 
   // setters
   uint8_t setProtocol(uint8_t protocol);
   uint8_t setOutputType(uint8_t output);
-  uint8_t setNumChannels(uint8_t channels);
-  uint8_t setChannel(uint8_t channel);
+  uint16_t setNumChannels(uint16_t channels);
+  uint16_t setChannel(uint16_t channel);
   uint8_t setBaudRate(uint8_t baud);
-  uint8_t setEventPeriod(uint8_t eperiod);
+  uint8_t setMaxDimming(uint8_t dimming);
+  uint8_t setMinDimming(uint8_t dimming);
 
 private:
   uint8_t mProtocol;
   uint8_t mOutputType;
-  uint8_t mNumChannels;
-  uint8_t mChannel;
+  uint16_t mNumChannels;
+  uint16_t mChannel;
   uint8_t mBaudRate;
-  uint8_t mEventPeriod;
+  uint8_t mMaxDimming;
+  uint8_t mMinDimming;
 
   // The shield uses the I2C SCL and SDA pins. On classic Arduinos
   // this is Analog 4 and 5 so you can't use those for analogRead() anymore

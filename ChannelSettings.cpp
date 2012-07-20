@@ -1,4 +1,6 @@
 #include "ChannelSettings.h"
+#include "OutputSettings.h"
+#include "NumChannelsSettings.h"
 
 ChannelSettings::ChannelSettings(DIYCVars *vars) : DIYCSettings(vars)
 {
@@ -7,16 +9,19 @@ ChannelSettings::ChannelSettings(DIYCVars *vars) : DIYCSettings(vars)
   mVars->getLcd()->print("Edit Channel ->");
 }
 
-/*
-DIYCSettings *ChannelSettings::downAction()
+DIYCSettings *ChannelSettings::upAction()
 {
-  return new OutputTypeSettings;
+  return new OutputSettings(mVars);
 }
-*/
 
 DIYCSettings *ChannelSettings::rightAction()
 {
   return new EditChannelSettings(mVars);
+}
+
+DIYCSettings *ChannelSettings::downAction()
+{
+  return new NumChannelsSettings(mVars);
 }
 
 DIYCSettings *ChannelSettings::selectAction()

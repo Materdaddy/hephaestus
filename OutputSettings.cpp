@@ -10,8 +10,17 @@ OutputSettings::OutputSettings(DIYCVars *vars) : DIYCSettings(vars)
 
 DIYCSettings *OutputSettings::downAction()
 {
-  //TODO: switch/case based on output type
-  return new ChannelSettings(mVars);
+  switch (mVars->getOutputType())
+  {
+    case (MANUAL):
+      return new ChannelSettings(mVars);
+//    case (CHASE):
+//      return new ChaseSettings(mVars);
+//    case (PATTERN):
+//      return new OutputPatternSettings(mVars);
+  }
+
+  return this;
 }
 
 DIYCSettings *OutputSettings::rightAction()
@@ -30,17 +39,17 @@ DIYCSettings *OutputSettings::selectAction()
 
 const char *EditOutputSettings::outputTypeToString()
 {
-	switch (mVars->getOutputType())
-	{
-		case MANUAL:
-		  return "Manual";
-		case CHASE:
-		  return "Chase";
-		case PATTERN:
-		  return "Pattern";
-		default:
-		  return "ERROR!";
-	}
+  switch (mOutputType)
+  {
+    case MANUAL:
+      return "Manual";
+    case CHASE:
+      return "Chase";
+    case PATTERN:
+      return "Pattern";
+    default:
+      return "ERROR!";
+  }
 }
 
 EditOutputSettings::EditOutputSettings(DIYCVars *vars) : DIYCSettings(vars), mOutputType(mVars->getOutputType())
@@ -52,7 +61,7 @@ EditOutputSettings::EditOutputSettings(DIYCVars *vars) : DIYCSettings(vars), mOu
 
 DIYCSettings *EditOutputSettings::downAction()
 {
-  if ( mOutputType >= 0 )
+  if ( mOutputType > 0 )
     --mOutputType;
 
   mVars->printSettings();
@@ -64,7 +73,7 @@ DIYCSettings *EditOutputSettings::downAction()
 
 DIYCSettings *EditOutputSettings::upAction()
 {
-  if ( mOutputType < MAX_OUTPUT_TYPES )
+  if ( mOutputType+1 < MAX_OUTPUT_TYPES )
     ++mOutputType;
 
   mVars->printSettings();
@@ -74,8 +83,15 @@ DIYCSettings *EditOutputSettings::upAction()
   return this;
 }
 
+DIYCSettings *EditOutputSettings::leftAction()
+{
+  return new OutputSettings(mVars);
+}
+
 DIYCSettings *EditOutputSettings::selectAction()
 {
   mVars->setOutputType(mOutputType);
   return new OutputSettings(mVars);
 }
+
+EditOutputSettings::~EditOutputSettings() { }

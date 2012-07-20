@@ -18,7 +18,7 @@ class EditOutputSettings : public DIYCSettings
 {
 public:
   EditOutputSettings(DIYCVars *vars);
-  ~EditOutputSettings() { }
+  ~EditOutputSettings();
 
   const char *outputTypeToString();
 

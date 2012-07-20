@@ -10,7 +10,7 @@
 
 #include "DIYCVars.h"
 #include "DIYCSettings.h"
-#include "ChannelSettings.h"
+#include "OutputSettings.h"
 
 // These #defines make it easy to set the backlight color
 #define RED 0x1
@@ -28,7 +28,7 @@ void setup() {
   Serial.begin(57600);
   Serial.print("Hello diyc.com!");
 
-  settings = new ChannelSettings(new DIYCVars());
+  settings = new OutputSettings(new DIYCVars());
 }
 
 void loop() {

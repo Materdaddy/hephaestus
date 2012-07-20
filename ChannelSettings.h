@@ -9,7 +9,9 @@ public:
   ChannelSettings(DIYCVars *vars);
   ~ChannelSettings() { }
 
+  DIYCSettings *upAction();
   DIYCSettings *rightAction();
+  DIYCSettings *downAction();
   DIYCSettings *selectAction();
 };
 
