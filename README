@@ -1,4 +1,4 @@
-Output Type					manual/chase/pattern						next
+Output Type					manual/chase/pattern						done
 Chase Speed					numbers										
 	(if set to chase)													
 Output Pattern				all on, all off, fades, groups				
@@ -9,9 +9,11 @@ Num Channels				d:512?
 Max Dimming Value			d:255, 1 - 255								
 Min Dimming Value			d:0, 0 - 254								
 Output Protocol				DMX/Renard									
+Baud Rate					192/384/576/1152/DMX						
 EEPROM Save					yes											
 EEPROM Read					yes (just a reset?)							
 
 TODO:
+* Main loop that acts on settings held in DIYCVars
 * Board Layout
 * SSR Functionality
