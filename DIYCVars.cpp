@@ -11,9 +11,10 @@ DIYCVars::DIYCVars()
 //  for ( int bytes = 0; bytes < sizeof(packed_t); ++bytes )
 //    *((char *)&settings + bytes) = EEPROM.read(bytes);
 
- packed_t settings = { RENARD, 8, 1, 57600, 50 };
+  packed_t settings = { RENARD, MANUAL, 8, 1, 57600, 50 };
 
   mProtocol = settings.protocol;
+  mOutputType = settings.outputType;
   mNumChannels = settings.numChannels;
   mChannel = settings.channel;
   mBaudRate = settings.baudRate;
@@ -27,10 +28,13 @@ void DIYCVars::printSettings()
   mLcd->clear();
   mLcd->print("R@");//TODO
   mLcd->print("56k");//TODO
-  mLcd->print(" C:");
-  mLcd->print(mChannel);
-  mLcd->print("/");
-  mLcd->print(mNumChannels);
+  if ( mOutputType == MANUAL )
+  {
+    mLcd->print(" C:");
+    mLcd->print(mChannel);
+    mLcd->print("/");
+    mLcd->print(mNumChannels);
+  }
 }
 
 int DIYCVars::saveToEeprom()
@@ -38,6 +42,7 @@ int DIYCVars::saveToEeprom()
   packed_t settings;
 
   settings.protocol = mProtocol;
+  settings.outputType = mOutputType;
   settings.numChannels = mNumChannels;
   settings.channel = mChannel;
   settings.baudRate = mBaudRate;
@@ -54,6 +59,14 @@ uint8_t DIYCVars::setProtocol(uint8_t protocol)
     mProtocol = protocol;
     
   return mProtocol;
+}
+
+uint8_t DIYCVars::setOutputType(uint8_t output)
+{
+  if ( output >= 0 && output <= MAX_OUTPUT_TYPES )
+    mOutputType = output;
+
+  return mOutputType;
 }
 
 uint8_t DIYCVars::setNumChannels(uint8_t channels)

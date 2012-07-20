@@ -22,7 +22,7 @@ public:
   DIYCSettings *upAction();
   DIYCSettings *downAction();
   DIYCSettings *selectAction();
-  
+
 private:
   uint8_t mChannel;
 };

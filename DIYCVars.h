@@ -9,9 +9,17 @@ enum protocols {
   MAX_PROTOCOLS
 };
 
+enum outputs {
+  MANUAL,
+  CHASE,
+  PATTERN,
+  MAX_OUTPUT_TYPES
+};
+
 typedef struct packed_s
 {
   uint8_t protocol;
+  uint8_t outputType;
   uint8_t numChannels;
   uint8_t channel;
   uint8_t baudRate;
@@ -29,6 +37,7 @@ public:
 
   // getters
   uint8_t getProtocol() { return mProtocol; }
+  uint8_t getOutputType() { return mOutputType; }
   uint8_t getNumChannels() { return mNumChannels; }
   uint8_t getChannel() { return mChannel; }
   uint8_t getBaud() { return mBaudRate; }
@@ -37,6 +46,7 @@ public:
 
   // setters
   uint8_t setProtocol(uint8_t protocol);
+  uint8_t setOutputType(uint8_t output);
   uint8_t setNumChannels(uint8_t channels);
   uint8_t setChannel(uint8_t channel);
   uint8_t setBaudRate(uint8_t baud);
@@ -44,6 +54,7 @@ public:
 
 private:
   uint8_t mProtocol;
+  uint8_t mOutputType;
   uint8_t mNumChannels;
   uint8_t mChannel;
   uint8_t mBaudRate;
