@@ -1,0 +1,17 @@
+Output Type					manual/chase/pattern						next
+Chase Speed					numbers										
+	(if set to chase)													
+Output Pattern				all on, all off, fades, groups				
+	(if set to pattern)													
+Current Channel				Numbers 1-max_channel						done
+	(if set to manual)													
+Num Channels				d:512?										
+Max Dimming Value			d:255, 1 - 255								
+Min Dimming Value			d:0, 0 - 254								
+Output Protocol				DMX/Renard									
+EEPROM Save					yes											
+EEPROM Read					yes (just a reset?)							
+
+TODO:
+* Board Layout
+* SSR Functionality
