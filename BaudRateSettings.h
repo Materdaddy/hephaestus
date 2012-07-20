@@ -10,6 +10,7 @@ public:
   ~BaudRateSettings() { }
 
   DIYCSettings *upAction();
+  DIYCSettings *downAction();
   DIYCSettings *rightAction();
   DIYCSettings *selectAction();
 };

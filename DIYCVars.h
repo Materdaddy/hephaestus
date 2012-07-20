@@ -44,6 +44,7 @@ public:
   ~DIYCVars();
 
   void printSettings();
+  void readFromEeprom();
   void saveToEeprom();
 
   uint16_t maxChannelsThisBaud();

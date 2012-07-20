@@ -1,26 +1,22 @@
 #include "DIYCVars.h"
 #include "EEPROM.h"
 
-DIYCVars::DIYCVars()
+#define CONFIG_START 32
+
+DIYCVars::DIYCVars() : mProtocol(RENARD),
+					   mOutputType(MANUAL),
+					   mNumChannels(24),
+					   mChannel(1),
+					   mBaudRate(REN_57600),
+					   mBaudRateRenard(REN_57600),
+					   mMaxDimming(255),
+					   mMinDimming(0)
 {
   mLcd = new Adafruit_RGBLCDShield;
   mLcd->begin(16,2);
   mLcd->print("Hello diyc.com!");
 
-//  packed_t settings;
-//  for ( int bytes = 0; bytes < sizeof(packed_t); ++bytes )
-//    *((char *)&settings + bytes) = EEPROM.read(bytes);
-
-  packed_t settings = { RENARD, MANUAL, 24, 1, REN_57600, REN_57600, 255, 0 };
-
-  mProtocol = settings.protocol;
-  mOutputType = settings.outputType;
-  mNumChannels = settings.numChannels;
-  mChannel = settings.channel;
-  mBaudRate = settings.baudRate;
-  mBaudRateRenard = settings.baudRateRenard;
-  mMaxDimming = settings.maxDimming;
-  mMinDimming = settings.minDimming;
+  readFromEeprom();
 }
 
 DIYCVars::~DIYCVars() { }
@@ -92,6 +88,24 @@ void DIYCVars::printSettings()
   }
 }
 
+void DIYCVars::readFromEeprom()
+{
+  packed_t settings;
+  for ( uint8_t bytes = 0; bytes < sizeof(packed_t); ++bytes )
+    *((char *)&settings + bytes) = EEPROM.read(CONFIG_START + bytes);
+
+  setOutputType(settings.outputType);
+  setNumChannels(settings.numChannels);
+  setChannel(settings.channel);
+  setBaudRate(settings.baudRateRenard);
+  // NOTE: We set protocol after baud rate soas to
+  // set the baud based on renard, and overwrite
+  // with dmx if in that mode
+  setProtocol(settings.protocol);
+  setMaxDimming(settings.maxDimming);
+  setMinDimming(settings.minDimming);
+}
+
 void DIYCVars::saveToEeprom()
 {
   packed_t settings;
@@ -105,15 +119,17 @@ void DIYCVars::saveToEeprom()
   settings.maxDimming = mMaxDimming;
   settings.minDimming = mMinDimming;
 
-  EEPROM.write(0, sizeof(packed_t));
+  for ( uint8_t bytes = 0; bytes < sizeof(packed_t); ++bytes )
+    EEPROM.write(CONFIG_START + bytes, *((char*)&settings + bytes));
 }
 
 uint8_t DIYCVars::setProtocol(uint8_t protocol)
 {
-  if ( protocol < 0 || protocol > MAX_PROTOCOLS )
-    return -1;
-  else
+  if ( protocol > 0 && protocol < MAX_PROTOCOLS )
     mProtocol = protocol;
+
+  if ( protocol == DMX )
+    setBaudRateDMX();
     
   return mProtocol;
 }

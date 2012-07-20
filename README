@@ -10,8 +10,9 @@ Max Dimming Value			d:255										done
 Min Dimming Value			d:0											done
 Output Protocol				DMX/Renard									done
 Baud Rate					192/384/576/1152/DMX						done
-EEPROM Save					yes											
-EEPROM Read					yes (just a reset?)							
+	(if set to renard)													done
+EEPROM Read					confirm										done
+EEPROM Save					confirm										done
 
 TODO:
 * Main loop that acts on settings held in DIYCVars

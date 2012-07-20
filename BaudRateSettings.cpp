@@ -1,5 +1,6 @@
 #include "BaudRateSettings.h"
 #include "ProtocolSettings.h"
+#include "ReadFromEepromSettings.h"
 
 BaudRateSettings::BaudRateSettings(DIYCVars *vars) : DIYCSettings(vars)
 {
@@ -11,6 +12,11 @@ BaudRateSettings::BaudRateSettings(DIYCVars *vars) : DIYCSettings(vars)
 DIYCSettings *BaudRateSettings::upAction()
 {
   return new ProtocolSettings(mVars);
+}
+
+DIYCSettings *BaudRateSettings::downAction()
+{
+  return new ReadFromEepromSettings(mVars);
 }
 
 DIYCSettings *BaudRateSettings::rightAction()

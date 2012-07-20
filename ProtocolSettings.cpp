@@ -1,6 +1,7 @@
 #include "ProtocolSettings.h"
 #include "MinDimmingSettings.h"
 #include "BaudRateSettings.h"
+#include "ReadFromEepromSettings.h"
 
 ProtocolSettings::ProtocolSettings(DIYCVars *vars) : DIYCSettings(vars)
 {
@@ -17,7 +18,8 @@ DIYCSettings *ProtocolSettings::upAction()
 DIYCSettings *ProtocolSettings::downAction()
 {
   if ( mVars->getProtocol() == DMX )
-    return this;
+    return new ReadFromEepromSettings(mVars);
+
   return new BaudRateSettings(mVars);
 }
 
@@ -87,9 +89,7 @@ DIYCSettings *EditProtocolSettings::leftAction()
 DIYCSettings *EditProtocolSettings::selectAction()
 {
   mVars->setProtocol(mProtocol);
-  if ( mProtocol == DMX )
-    mVars->setBaudRateDMX();
-  else
+  if ( mProtocol != DMX )
     mVars->setBaudRateRenard();
 
   return new ProtocolSettings(mVars);
