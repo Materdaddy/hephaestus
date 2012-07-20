@@ -26,14 +26,67 @@ DIYCVars::~DIYCVars() { }
 void DIYCVars::printSettings()
 {
   mLcd->clear();
-  mLcd->print("R@");//TODO
-  mLcd->print("56k");//TODO
-  if ( mOutputType == MANUAL )
+  switch (mProtocol)
   {
-    mLcd->print(" C:");
-    mLcd->print(mChannel);
-    mLcd->print("/");
-    mLcd->print(mNumChannels);
+    case ( RENARD ):
+    {
+      mLcd->print("R@");
+      break;
+    }
+    case ( DMX ):
+    {
+      mLcd->print("D@");
+      break;
+    }
+  }
+  switch (mBaudRate)
+  {
+    case ( REN_19200 ):
+    {
+      mLcd->print("19k ");
+      break;
+    }
+    case ( REN_38400 ):
+    {
+      mLcd->print("38k ");
+      break;
+    }
+    case ( REN_57600 ):
+    {
+      mLcd->print("56k ");
+      break;
+    }
+    case ( REN_115200 ):
+    {
+      mLcd->print("115k ");
+      break;
+    }
+    case ( DMX_250 ):
+    {
+      mLcd->print("250k ");
+      break;
+    }
+  }
+  switch (mOutputType)
+  {
+    case ( MANUAL ):
+    {
+      mLcd->print("M:");
+      mLcd->print(mChannel);
+      mLcd->print("/");
+      mLcd->print(mNumChannels);
+      break;
+    }
+    case ( CHASE ):
+    {
+      mLcd->print("Chase");
+      break;
+    }
+    case ( PATTERN ):
+    {
+      mLcd->print("Pattern");
+      break;
+    }
   }
 }
 

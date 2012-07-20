@@ -16,6 +16,15 @@ enum outputs {
   MAX_OUTPUT_TYPES
 };
 
+enum bauds {
+	REN_19200,
+	REN_38400,
+	REN_57600,
+	REN_115200,
+	DMX_250,
+	MAX_BAUD_RATES
+};
+
 typedef struct packed_s
 {
   uint8_t protocol;
