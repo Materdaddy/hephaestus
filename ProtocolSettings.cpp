@@ -1,5 +1,6 @@
 #include "ProtocolSettings.h"
 #include "MinDimmingSettings.h"
+#include "BaudRateSettings.h"
 
 ProtocolSettings::ProtocolSettings(DIYCVars *vars) : DIYCSettings(vars)
 {
@@ -11,6 +12,13 @@ ProtocolSettings::ProtocolSettings(DIYCVars *vars) : DIYCSettings(vars)
 DIYCSettings *ProtocolSettings::upAction()
 {
   return new MinDimmingSettings(mVars);
+}
+
+DIYCSettings *ProtocolSettings::downAction()
+{
+  if ( mVars->getProtocol() == DMX )
+    return this;
+  return new BaudRateSettings(mVars);
 }
 
 DIYCSettings *ProtocolSettings::rightAction()
@@ -79,6 +87,11 @@ DIYCSettings *EditProtocolSettings::leftAction()
 DIYCSettings *EditProtocolSettings::selectAction()
 {
   mVars->setProtocol(mProtocol);
+  if ( mProtocol == DMX )
+    mVars->setBaudRateDMX();
+  else
+    mVars->setBaudRateRenard();
+
   return new ProtocolSettings(mVars);
 }
 

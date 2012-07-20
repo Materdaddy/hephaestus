@@ -11,13 +11,14 @@ DIYCVars::DIYCVars()
 //  for ( int bytes = 0; bytes < sizeof(packed_t); ++bytes )
 //    *((char *)&settings + bytes) = EEPROM.read(bytes);
 
-  packed_t settings = { RENARD, MANUAL, 24, 1, REN_57600, 255, 0 };
+  packed_t settings = { RENARD, MANUAL, 24, 1, REN_57600, REN_57600, 255, 0 };
 
   mProtocol = settings.protocol;
   mOutputType = settings.outputType;
   mNumChannels = settings.numChannels;
   mChannel = settings.channel;
   mBaudRate = settings.baudRate;
+  mBaudRateRenard = settings.baudRateRenard;
   mMaxDimming = settings.maxDimming;
   mMinDimming = settings.minDimming;
 }
@@ -100,6 +101,7 @@ void DIYCVars::saveToEeprom()
   settings.numChannels = mNumChannels;
   settings.channel = mChannel;
   settings.baudRate = mBaudRate;
+  settings.baudRateRenard = mBaudRateRenard;
   settings.maxDimming = mMaxDimming;
   settings.minDimming = mMinDimming;
 
@@ -169,6 +171,7 @@ uint8_t DIYCVars::setBaudRate(uint8_t baud)
 		case (REN_38400):
 		case (REN_57600):
 		case (REN_115200):
+		    mBaudRateRenard = baud;
 		case (DMX_250):
 			mBaudRate = baud;
 			break;
@@ -177,6 +180,11 @@ uint8_t DIYCVars::setBaudRate(uint8_t baud)
   }
   
   return mBaudRate;
+}
+
+void DIYCVars::setBaudRateRenard()
+{
+  setBaudRate(mBaudRateRenard);
 }
 
 uint8_t DIYCVars::setMaxDimming(uint8_t dimming)

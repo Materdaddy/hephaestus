@@ -10,6 +10,7 @@ public:
   ~ProtocolSettings() { }
 
   DIYCSettings *upAction();
+  DIYCSettings *downAction();
   DIYCSettings *rightAction();
   DIYCSettings *selectAction();
 };

@@ -32,6 +32,7 @@ typedef struct packed_s
   uint16_t numChannels;
   uint16_t channel;
   uint8_t baudRate;
+  uint8_t baudRateRenard;
   uint8_t maxDimming;
   uint8_t minDimming;
 } packed_t;
@@ -52,7 +53,7 @@ public:
   uint8_t getOutputType() { return mOutputType; }
   uint16_t getNumChannels() { return mNumChannels; }
   uint16_t getChannel() { return mChannel; }
-  uint8_t getBaud() { return mBaudRate; }
+  uint8_t getBaudRate() { return mBaudRate; }
   uint8_t getMaxDimming() { return mMaxDimming; }
   uint8_t getMinDimming() { return mMinDimming; }
   Adafruit_RGBLCDShield *getLcd() { return mLcd; }
@@ -66,12 +67,16 @@ public:
   uint8_t setMaxDimming(uint8_t dimming);
   uint8_t setMinDimming(uint8_t dimming);
 
+  void setBaudRateDMX() { setBaudRate(DMX_250); }
+  void setBaudRateRenard();
+
 private:
   uint8_t mProtocol;
   uint8_t mOutputType;
   uint16_t mNumChannels;
   uint16_t mChannel;
   uint8_t mBaudRate;
+  uint8_t mBaudRateRenard;
   uint8_t mMaxDimming;
   uint8_t mMinDimming;
 
