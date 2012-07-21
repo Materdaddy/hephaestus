@@ -71,6 +71,8 @@ public:
   void setBaudRateDMX() { setBaudRate(DMX_250); }
   void setBaudRateRenard();
 
+  void sendData();
+
 private:
   uint8_t mProtocol;
   uint8_t mOutputType;

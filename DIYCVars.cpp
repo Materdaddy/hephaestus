@@ -1,5 +1,6 @@
 #include "DIYCVars.h"
 #include "EEPROM.h"
+#include "Arduino.h"
 
 #define CONFIG_START 32
 
@@ -14,7 +15,6 @@ DIYCVars::DIYCVars() : mProtocol(RENARD),
 {
   mLcd = new Adafruit_RGBLCDShield;
   mLcd->begin(16,2);
-  mLcd->print("Hello diyc.com!");
 
   readFromEeprom();
 }
@@ -184,15 +184,34 @@ uint8_t DIYCVars::setBaudRate(uint8_t baud)
   switch (baud)
   {
 		case (REN_19200):
+			Serial.begin(19200);
+			mBaudRateRenard = baud;
+			mBaudRate = baud;
+			break;
 		case (REN_38400):
+			Serial.begin(38400);
+			mBaudRateRenard = baud;
+			mBaudRate = baud;
+			break;
 		case (REN_57600):
+			Serial.begin(57600);
+			mBaudRateRenard = baud;
+			mBaudRate = baud;
+			break;
 		case (REN_115200):
-		    mBaudRateRenard = baud;
+			Serial.begin(115200);
+			mBaudRateRenard = baud;
+			mBaudRate = baud;
+			break;
 		case (DMX_250):
+			Serial.begin(250000);
 			mBaudRate = baud;
 			break;
 		default:
-			mBaudRate = REN_57600;
+			Serial.begin(57600);
+			mBaudRateRenard = baud;
+			mBaudRate = baud;
+			break;
   }
   
   return mBaudRate;
@@ -205,10 +224,37 @@ void DIYCVars::setBaudRateRenard()
 
 uint8_t DIYCVars::setMaxDimming(uint8_t dimming)
 {
+	if ( dimming < mMinDimming )
+		mMinDimming = dimming;
 	mMaxDimming = dimming;
 }
 
 uint8_t DIYCVars::setMinDimming(uint8_t dimming)
 {
+	if ( dimming > mMaxDimming )
+		mMaxDimming = dimming;
 	mMinDimming = dimming;
+}
+
+void DIYCVars::sendData()
+{
+	switch (mOutputType)
+	{
+		case ( MANUAL ):
+		{
+			if ( mProtocol == RENARD )
+			{
+				Serial.write(0x7E);
+				Serial.write(0x80);
+				for ( int i = 1; i <= mNumChannels; i++ )
+				{
+					if ( i == mChannel )
+						Serial.write(mMaxDimming);
+					else
+						Serial.write(mMinDimming);
+				}
+			}
+			break;
+		}
+	}
 }
