@@ -11,7 +11,11 @@ DIYCVars::DIYCVars() : mProtocol(RENARD),
 					   mBaudRate(REN_57600),
 					   mBaudRateRenard(REN_57600),
 					   mMaxDimming(255),
-					   mMinDimming(0)
+					   mMinDimming(0),
+					   mTail(4),
+					   mDelay(1000),
+					   mLast(millis()),
+					   mCurrentChaseChannel(0)
 {
 	mLcd = new Adafruit_RGBLCDShield;
 	mLcd->begin(16,2);
@@ -104,6 +108,8 @@ void DIYCVars::readFromEeprom()
 	setProtocol(settings.protocol);
 	setMaxDimming(settings.maxDimming);
 	setMinDimming(settings.minDimming);
+	setTail(settings.tail);
+	setDelay(settings.delay);
 }
 
 void DIYCVars::saveToEeprom()
@@ -118,6 +124,8 @@ void DIYCVars::saveToEeprom()
 	settings.baudRateRenard = mBaudRateRenard;
 	settings.maxDimming = mMaxDimming;
 	settings.minDimming = mMinDimming;
+	settings.tail = mTail;
+	settings.delay = mDelay;
 
 	for ( uint8_t bytes = 0; bytes < sizeof(packed_t); ++bytes )
 		EEPROM.write(CONFIG_START + bytes, *((char*)&settings + bytes));
@@ -236,25 +244,88 @@ uint8_t DIYCVars::setMinDimming(uint8_t dimming)
 	mMinDimming = dimming;
 }
 
+uint8_t DIYCVars::setTail(uint8_t tail)
+{
+	if ( tail <= MAX_TAIL && tail >= 0 )
+		mTail = tail;
+
+	return tail;
+}
+
+long DIYCVars::setDelay(long delay)
+{
+	if ( delay >= 0 && delay <= MAX_DELAY )
+		mDelay = delay;
+
+	return mDelay;
+}
+
 void DIYCVars::sendData()
 {
+	uint8_t *data = (uint8_t *)malloc( mNumChannels );
+	for ( int i = 0; i < mNumChannels; ++i )
+		data[i] = mMinDimming;
+
 	switch (mOutputType)
 	{
 		case ( MANUAL ):
 		{
-			if ( mProtocol == RENARD )
+			data[mChannel-1] = mMaxDimming;
+			break;
+		}
+		case ( CHASE ):
+		{
+			long now = millis();
+			if ( mLast + mDelay < now )
 			{
-				Serial.write(0x7E);
-				Serial.write(0x80);
-				for ( int i = 1; i <= mNumChannels; i++ )
-				{
-					if ( i == mChannel )
-						Serial.write(mMaxDimming);
-					else
-						Serial.write(mMinDimming);
-				}
+				mLast = now;
+				mCurrentChaseChannel = ( mCurrentChaseChannel + 1 ) % mNumChannels;
 			}
+
+			// Draw our tail
+			for ( uint8_t tail = 1; tail <= mTail; ++tail )
+			{
+				uint16_t tail_value = (mNumChannels + mCurrentChaseChannel - tail) % mNumChannels;
+				uint8_t dim_per_tail = (mMaxDimming - mMinDimming ) / (mTail+1);
+				uint8_t dimming_value = mMinDimming + (dim_per_tail * (mTail - tail));
+				data[tail_value] = dimming_value;
+			}
+			// Set the current chase channel
+			data[mCurrentChaseChannel] = mMaxDimming;
+
+			break;
+		}
+		case ( PATTERN ):
+		{
 			break;
 		}
 	}
+
+	switch (mProtocol)
+	{
+		case ( RENARD ):
+		{
+			Serial.write(0x7E);
+			Serial.write(0x80);
+
+			Serial.write(data, mNumChannels);
+			break;
+		}
+		case ( DMX ):
+		{
+			// send the break by sending a slow 0 byte
+			Serial.begin(125000);
+			Serial.write((uint8_t)0);
+
+			// now back to DMX speed: 250000baud
+			Serial.begin(250000);
+			// write start code
+			Serial.write((uint8_t)0);
+
+			Serial.write(data, mNumChannels);
+			break;
+		}
+	}
+
+	free(data);
 }

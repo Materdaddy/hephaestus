@@ -1,5 +1,6 @@
 #include "OutputSettings.h"
 #include "ChannelSettings.h"
+#include "ChaseSpeedSettings.h"
 
 OutputSettings::OutputSettings(DIYCVars *vars) : DIYCSettings(vars)
 {
@@ -14,8 +15,8 @@ DIYCSettings *OutputSettings::downAction()
 	{
 		case (MANUAL):
 			return new ChannelSettings(mVars);
-//		case (CHASE):
-//			return new ChaseSettings(mVars);
+		case (CHASE):
+			return new ChaseSpeedSettings(mVars);
 //		case (PATTERN):
 //			return new OutputPatternSettings(mVars);
 	}

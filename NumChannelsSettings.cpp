@@ -1,6 +1,7 @@
 #include "NumChannelsSettings.h"
 #include "ChannelSettings.h"
 #include "MaxDimmingSettings.h"
+#include "ChaseTailSettings.h"
 
 NumChannelsSettings::NumChannelsSettings(DIYCVars *vars) : DIYCSettings(vars)
 {
@@ -15,8 +16,8 @@ DIYCSettings *NumChannelsSettings::upAction()
 	{
 		case (MANUAL):
 			return new ChannelSettings(mVars);
-//		case (CHASE):
-//			return new ChaseSettings(mVars);
+		case (CHASE):
+			return new ChaseTailSettings(mVars);
 //		case (PATTERN):
 //			return new OutputPatternSettings(mVars);
 	}

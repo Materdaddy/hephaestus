@@ -35,7 +35,12 @@ typedef struct packed_s
 	uint8_t baudRateRenard;
 	uint8_t maxDimming;
 	uint8_t minDimming;
+	uint8_t tail;
+	long delay;
 } packed_t;
+
+#define MAX_TAIL 6
+#define MAX_DELAY 10000
 
 class DIYCVars
 {
@@ -57,6 +62,8 @@ public:
 	uint8_t getBaudRate() { return mBaudRate; }
 	uint8_t getMaxDimming() { return mMaxDimming; }
 	uint8_t getMinDimming() { return mMinDimming; }
+	uint8_t getTail() { return mTail; }
+	long getDelay() { return mDelay; }
 	Adafruit_RGBLCDShield *getLcd() { return mLcd; }
 
 	// setters
@@ -67,13 +74,15 @@ public:
 	uint8_t setBaudRate(uint8_t baud);
 	uint8_t setMaxDimming(uint8_t dimming);
 	uint8_t setMinDimming(uint8_t dimming);
-
 	void setBaudRateDMX() { setBaudRate(DMX_250); }
 	void setBaudRateRenard();
+	uint8_t setTail(uint8_t tail);
+	long setDelay(long delay);
 
 	void sendData();
 
 private:
+	// Variables saved in EEPROM
 	uint8_t mProtocol;
 	uint8_t mOutputType;
 	uint16_t mNumChannels;
@@ -82,6 +91,12 @@ private:
 	uint8_t mBaudRateRenard;
 	uint8_t mMaxDimming;
 	uint8_t mMinDimming;
+	uint8_t mTail;
+	long mDelay;
+
+	// Variables not saved in EEPROM
+	long mLast;
+	uint16_t mCurrentChaseChannel;
 
 	// The shield uses the I2C SCL and SDA pins. On classic Arduinos
 	// this is Analog 4 and 5 so you can't use those for analogRead() anymore
