@@ -6,28 +6,28 @@
 class MaxDimmingSettings : public DIYCSettings
 {
 public:
-  MaxDimmingSettings(DIYCVars *vars);
-  ~MaxDimmingSettings() { }
+	MaxDimmingSettings(DIYCVars *vars);
+	~MaxDimmingSettings() { }
 
-  DIYCSettings *upAction();
-  DIYCSettings *downAction();
-  DIYCSettings *rightAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *upAction();
+	DIYCSettings *downAction();
+	DIYCSettings *rightAction();
+	DIYCSettings *selectAction();
 };
 
 class EditMaxDimmingSettings : public DIYCSettings
 {
 public:
-  EditMaxDimmingSettings(DIYCVars *vars);
-  ~EditMaxDimmingSettings();
+	EditMaxDimmingSettings(DIYCVars *vars);
+	~EditMaxDimmingSettings();
 
-  DIYCSettings *leftAction();
-  DIYCSettings *upAction();
-  DIYCSettings *downAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *leftAction();
+	DIYCSettings *upAction();
+	DIYCSettings *downAction();
+	DIYCSettings *selectAction();
 
 private:
-  uint8_t mMaxDimming;
+	uint8_t mMaxDimming;
 };
 
 #endif // __MAX_DIMMING_SETTINGS_H__

@@ -6,22 +6,22 @@
 class SaveToEepromSettings : public DIYCSettings
 {
 public:
-  SaveToEepromSettings(DIYCVars *vars);
-  ~SaveToEepromSettings() { }
+	SaveToEepromSettings(DIYCVars *vars);
+	~SaveToEepromSettings() { }
 
-  DIYCSettings *upAction();
-  DIYCSettings *rightAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *upAction();
+	DIYCSettings *rightAction();
+	DIYCSettings *selectAction();
 };
 
 class EditSaveToEepromSettings : public DIYCSettings
 {
 public:
-  EditSaveToEepromSettings(DIYCVars *vars);
-  ~EditSaveToEepromSettings();
+	EditSaveToEepromSettings(DIYCVars *vars);
+	~EditSaveToEepromSettings();
 
-  DIYCSettings *leftAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *leftAction();
+	DIYCSettings *selectAction();
 };
 
 #endif // __SAVE_TO_EEPROM_SETTINGS_H__

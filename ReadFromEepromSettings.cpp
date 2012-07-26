@@ -5,55 +5,51 @@
 
 ReadFromEepromSettings::ReadFromEepromSettings(DIYCVars *vars) : DIYCSettings(vars)
 {
-  mVars->printSettings();
-  mVars->getLcd()->setCursor(0,1);
-  mVars->getLcd()->print("Restore ->");
+	mVars->printSettings();
+	mVars->getLcd()->setCursor(0,1);
+	mVars->getLcd()->print("Restore ->");
 }
 
 DIYCSettings *ReadFromEepromSettings::upAction()
 {
-  if ( mVars->getProtocol() != DMX )
-	return new BaudRateSettings(mVars);
-  else
-	return new ProtocolSettings(mVars);
+	if ( mVars->getProtocol() != DMX )
+		return new BaudRateSettings(mVars);
+	else
+		return new ProtocolSettings(mVars);
 }
 
 DIYCSettings *ReadFromEepromSettings::downAction()
 {
-  return new SaveToEepromSettings(mVars);
+	return new SaveToEepromSettings(mVars);
 }
 
 DIYCSettings *ReadFromEepromSettings::rightAction()
 {
-  return new EditReadFromEepromSettings(mVars);
+	return new EditReadFromEepromSettings(mVars);
 }
 
 DIYCSettings *ReadFromEepromSettings::selectAction()
 {
-  return new EditReadFromEepromSettings(mVars);
+	return new EditReadFromEepromSettings(mVars);
 }
-
-/*
- * Edit output settings
- */
 
 EditReadFromEepromSettings::EditReadFromEepromSettings(DIYCVars *vars) : DIYCSettings(vars)
 {
-  mVars->printSettings();
-  mVars->getLcd()->setCursor(0,1);
-  mVars->getLcd()->print("Confirm?");
+	mVars->printSettings();
+	mVars->getLcd()->setCursor(0,1);
+	mVars->getLcd()->print("Confirm?");
 }
 
 DIYCSettings *EditReadFromEepromSettings::leftAction()
 {
-  return new ReadFromEepromSettings(mVars);
+	return new ReadFromEepromSettings(mVars);
 }
 
 DIYCSettings *EditReadFromEepromSettings::selectAction()
 {
-  mVars->readFromEeprom();
+	mVars->readFromEeprom();
 
-  return new ReadFromEepromSettings(mVars);
+	return new ReadFromEepromSettings(mVars);
 }
 
 EditReadFromEepromSettings::~EditReadFromEepromSettings() { }

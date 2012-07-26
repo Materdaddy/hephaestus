@@ -6,30 +6,30 @@
 class ProtocolSettings : public DIYCSettings
 {
 public:
-  ProtocolSettings(DIYCVars *vars);
-  ~ProtocolSettings() { }
+	ProtocolSettings(DIYCVars *vars);
+	~ProtocolSettings() { }
 
-  DIYCSettings *upAction();
-  DIYCSettings *downAction();
-  DIYCSettings *rightAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *upAction();
+	DIYCSettings *downAction();
+	DIYCSettings *rightAction();
+	DIYCSettings *selectAction();
 };
 
 class EditProtocolSettings : public DIYCSettings
 {
 public:
-  EditProtocolSettings(DIYCVars *vars);
-  ~EditProtocolSettings();
+	EditProtocolSettings(DIYCVars *vars);
+	~EditProtocolSettings();
 
-  const char *protocolToString();
+	const char *protocolToString();
 
-  DIYCSettings *leftAction();
-  DIYCSettings *upAction();
-  DIYCSettings *downAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *leftAction();
+	DIYCSettings *upAction();
+	DIYCSettings *downAction();
+	DIYCSettings *selectAction();
 
 private:
-  uint8_t mProtocol;
+	uint8_t mProtocol;
 };
 
 #endif // __PROTOCOL_SETTINGS_H__

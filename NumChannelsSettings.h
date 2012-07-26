@@ -6,28 +6,28 @@
 class NumChannelsSettings : public DIYCSettings
 {
 public:
-  NumChannelsSettings(DIYCVars *vars);
-  ~NumChannelsSettings() { }
+	NumChannelsSettings(DIYCVars *vars);
+	~NumChannelsSettings() { }
 
-  DIYCSettings *upAction();
-  DIYCSettings *downAction();
-  DIYCSettings *rightAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *upAction();
+	DIYCSettings *downAction();
+	DIYCSettings *rightAction();
+	DIYCSettings *selectAction();
 };
 
 class EditNumChannelsSettings : public DIYCSettings
 {
 public:
-  EditNumChannelsSettings(DIYCVars *vars);
-  ~EditNumChannelsSettings();
+	EditNumChannelsSettings(DIYCVars *vars);
+	~EditNumChannelsSettings();
 
-  DIYCSettings *leftAction();
-  DIYCSettings *upAction();
-  DIYCSettings *downAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *leftAction();
+	DIYCSettings *upAction();
+	DIYCSettings *downAction();
+	DIYCSettings *selectAction();
 
 private:
-  uint8_t mNumChannels;
+	uint8_t mNumChannels;
 };
 
 #endif // __NUM_CHANNEL_SETTINGS_H__

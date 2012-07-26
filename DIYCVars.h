@@ -4,16 +4,16 @@
 #include <Adafruit_RGBLCDShield.h>
 
 enum protocols {
-  RENARD,
-  DMX,
-  MAX_PROTOCOLS
+	RENARD,
+	DMX,
+	MAX_PROTOCOLS
 };
 
 enum outputs {
-  MANUAL,
-  CHASE,
-  PATTERN,
-  MAX_OUTPUT_TYPES
+	MANUAL,
+	CHASE,
+	PATTERN,
+	MAX_OUTPUT_TYPES
 };
 
 enum bauds {
@@ -27,67 +27,67 @@ enum bauds {
 
 typedef struct packed_s
 {
-  uint8_t protocol;
-  uint8_t outputType;
-  uint16_t numChannels;
-  uint16_t channel;
-  uint8_t baudRate;
-  uint8_t baudRateRenard;
-  uint8_t maxDimming;
-  uint8_t minDimming;
+	uint8_t protocol;
+	uint8_t outputType;
+	uint16_t numChannels;
+	uint16_t channel;
+	uint8_t baudRate;
+	uint8_t baudRateRenard;
+	uint8_t maxDimming;
+	uint8_t minDimming;
 } packed_t;
 
 class DIYCVars
 {
 public:
-  DIYCVars();
-  ~DIYCVars();
+	DIYCVars();
+	~DIYCVars();
 
-  void printSettings();
-  void readFromEeprom();
-  void saveToEeprom();
+	void printSettings();
+	void readFromEeprom();
+	void saveToEeprom();
 
-  uint16_t maxChannelsThisBaud();
+	uint16_t maxChannelsThisBaud();
 
-  // getters
-  uint8_t getProtocol() { return mProtocol; }
-  uint8_t getOutputType() { return mOutputType; }
-  uint16_t getNumChannels() { return mNumChannels; }
-  uint16_t getChannel() { return mChannel; }
-  uint8_t getBaudRate() { return mBaudRate; }
-  uint8_t getMaxDimming() { return mMaxDimming; }
-  uint8_t getMinDimming() { return mMinDimming; }
-  Adafruit_RGBLCDShield *getLcd() { return mLcd; }
+	// getters
+	uint8_t getProtocol() { return mProtocol; }
+	uint8_t getOutputType() { return mOutputType; }
+	uint16_t getNumChannels() { return mNumChannels; }
+	uint16_t getChannel() { return mChannel; }
+	uint8_t getBaudRate() { return mBaudRate; }
+	uint8_t getMaxDimming() { return mMaxDimming; }
+	uint8_t getMinDimming() { return mMinDimming; }
+	Adafruit_RGBLCDShield *getLcd() { return mLcd; }
 
-  // setters
-  uint8_t setProtocol(uint8_t protocol);
-  uint8_t setOutputType(uint8_t output);
-  uint16_t setNumChannels(uint16_t channels);
-  uint16_t setChannel(uint16_t channel);
-  uint8_t setBaudRate(uint8_t baud);
-  uint8_t setMaxDimming(uint8_t dimming);
-  uint8_t setMinDimming(uint8_t dimming);
+	// setters
+	uint8_t setProtocol(uint8_t protocol);
+	uint8_t setOutputType(uint8_t output);
+	uint16_t setNumChannels(uint16_t channels);
+	uint16_t setChannel(uint16_t channel);
+	uint8_t setBaudRate(uint8_t baud);
+	uint8_t setMaxDimming(uint8_t dimming);
+	uint8_t setMinDimming(uint8_t dimming);
 
-  void setBaudRateDMX() { setBaudRate(DMX_250); }
-  void setBaudRateRenard();
+	void setBaudRateDMX() { setBaudRate(DMX_250); }
+	void setBaudRateRenard();
 
-  void sendData();
+	void sendData();
 
 private:
-  uint8_t mProtocol;
-  uint8_t mOutputType;
-  uint16_t mNumChannels;
-  uint16_t mChannel;
-  uint8_t mBaudRate;
-  uint8_t mBaudRateRenard;
-  uint8_t mMaxDimming;
-  uint8_t mMinDimming;
+	uint8_t mProtocol;
+	uint8_t mOutputType;
+	uint16_t mNumChannels;
+	uint16_t mChannel;
+	uint8_t mBaudRate;
+	uint8_t mBaudRateRenard;
+	uint8_t mMaxDimming;
+	uint8_t mMinDimming;
 
-  // The shield uses the I2C SCL and SDA pins. On classic Arduinos
-  // this is Analog 4 and 5 so you can't use those for analogRead() anymore
-  // However, you can connect other I2C sensors to the I2C bus and share
-  // the I2C bus.
-  Adafruit_RGBLCDShield *mLcd;
+	// The shield uses the I2C SCL and SDA pins. On classic Arduinos
+	// this is Analog 4 and 5 so you can't use those for analogRead() anymore
+	// However, you can connect other I2C sensors to the I2C bus and share
+	// the I2C bus.
+	Adafruit_RGBLCDShield *mLcd;
 };
 
 #endif // __DIYC_VARS_H__

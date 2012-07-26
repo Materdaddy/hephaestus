@@ -6,28 +6,28 @@
 class MinDimmingSettings : public DIYCSettings
 {
 public:
-  MinDimmingSettings(DIYCVars *vars);
-  ~MinDimmingSettings() { }
+	MinDimmingSettings(DIYCVars *vars);
+	~MinDimmingSettings() { }
 
-  DIYCSettings *upAction();
-  DIYCSettings *downAction();
-  DIYCSettings *rightAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *upAction();
+	DIYCSettings *downAction();
+	DIYCSettings *rightAction();
+	DIYCSettings *selectAction();
 };
 
 class EditMinDimmingSettings : public DIYCSettings
 {
 public:
-  EditMinDimmingSettings(DIYCVars *vars);
-  ~EditMinDimmingSettings();
+	EditMinDimmingSettings(DIYCVars *vars);
+	~EditMinDimmingSettings();
 
-  DIYCSettings *leftAction();
-  DIYCSettings *upAction();
-  DIYCSettings *downAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *leftAction();
+	DIYCSettings *upAction();
+	DIYCSettings *downAction();
+	DIYCSettings *selectAction();
 
 private:
-  uint8_t mMinDimming;
+	uint8_t mMinDimming;
 };
 
 #endif // __MIN_DIMMING_SETTINGS_H__

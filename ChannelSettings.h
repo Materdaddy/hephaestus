@@ -6,27 +6,27 @@
 class ChannelSettings : public DIYCSettings
 {
 public:
-  ChannelSettings(DIYCVars *vars);
-  ~ChannelSettings() { }
+	ChannelSettings(DIYCVars *vars);
+	~ChannelSettings() { }
 
-  DIYCSettings *upAction();
-  DIYCSettings *rightAction();
-  DIYCSettings *downAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *upAction();
+	DIYCSettings *rightAction();
+	DIYCSettings *downAction();
+	DIYCSettings *selectAction();
 };
 
 class EditChannelSettings : public DIYCSettings
 {
 public:
-  EditChannelSettings(DIYCVars *vars);
-  ~EditChannelSettings() { }
+	EditChannelSettings(DIYCVars *vars);
+	~EditChannelSettings() { }
 
-  DIYCSettings *upAction();
-  DIYCSettings *downAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *upAction();
+	DIYCSettings *downAction();
+	DIYCSettings *selectAction();
 
 private:
-  uint8_t mChannel;
+	uint8_t mChannel;
 };
 
 #endif // __CHANNEL_SETTINGS_H__

@@ -6,29 +6,29 @@
 class OutputSettings : public DIYCSettings
 {
 public:
-  OutputSettings(DIYCVars *vars);
-  ~OutputSettings() { }
+	OutputSettings(DIYCVars *vars);
+	~OutputSettings() { }
 
-  DIYCSettings *rightAction();
-  DIYCSettings *selectAction();
-  DIYCSettings *downAction();
+	DIYCSettings *rightAction();
+	DIYCSettings *selectAction();
+	DIYCSettings *downAction();
 };
 
 class EditOutputSettings : public DIYCSettings
 {
 public:
-  EditOutputSettings(DIYCVars *vars);
-  ~EditOutputSettings();
+	EditOutputSettings(DIYCVars *vars);
+	~EditOutputSettings();
 
-  const char *outputTypeToString();
+	const char *outputTypeToString();
 
-  DIYCSettings *leftAction();
-  DIYCSettings *upAction();
-  DIYCSettings *downAction();
-  DIYCSettings *selectAction();
+	DIYCSettings *leftAction();
+	DIYCSettings *upAction();
+	DIYCSettings *downAction();
+	DIYCSettings *selectAction();
 
 private:
-  uint8_t mOutputType;
+	uint8_t mOutputType;
 };
 
 #endif // __OUTPUT_SETTINGS_H__

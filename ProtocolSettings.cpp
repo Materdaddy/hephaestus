@@ -5,37 +5,33 @@
 
 ProtocolSettings::ProtocolSettings(DIYCVars *vars) : DIYCSettings(vars)
 {
-  mVars->printSettings();
-  mVars->getLcd()->setCursor(0,1);
-  mVars->getLcd()->print("Protocol ->");
+	mVars->printSettings();
+	mVars->getLcd()->setCursor(0,1);
+	mVars->getLcd()->print("Protocol ->");
 }
 
 DIYCSettings *ProtocolSettings::upAction()
 {
-  return new MinDimmingSettings(mVars);
+	return new MinDimmingSettings(mVars);
 }
 
 DIYCSettings *ProtocolSettings::downAction()
 {
-  if ( mVars->getProtocol() == DMX )
-    return new ReadFromEepromSettings(mVars);
+	if ( mVars->getProtocol() == DMX )
+		return new ReadFromEepromSettings(mVars);
 
-  return new BaudRateSettings(mVars);
+	return new BaudRateSettings(mVars);
 }
 
 DIYCSettings *ProtocolSettings::rightAction()
 {
-  return new EditProtocolSettings(mVars);
+	return new EditProtocolSettings(mVars);
 }
 
 DIYCSettings *ProtocolSettings::selectAction()
 {
-  return new EditProtocolSettings(mVars);
+	return new EditProtocolSettings(mVars);
 }
-
-/*
- * Edit output settings
- */
 
 const char *EditProtocolSettings::protocolToString()
 {
@@ -52,47 +48,47 @@ const char *EditProtocolSettings::protocolToString()
 
 EditProtocolSettings::EditProtocolSettings(DIYCVars *vars) : DIYCSettings(vars), mProtocol(mVars->getProtocol())
 {
-  mVars->printSettings();
-  mVars->getLcd()->setCursor(0,1);
-  mVars->getLcd()->print(protocolToString());
+	mVars->printSettings();
+	mVars->getLcd()->setCursor(0,1);
+	mVars->getLcd()->print(protocolToString());
 }
 
 DIYCSettings *EditProtocolSettings::downAction()
 {
-  if ( mProtocol > 0 )
-    --mProtocol;
+	if ( mProtocol > 0 )
+		--mProtocol;
 
-  mVars->printSettings();
-  mVars->getLcd()->setCursor(0,1);
-  mVars->getLcd()->print(protocolToString());
+	mVars->printSettings();
+	mVars->getLcd()->setCursor(0,1);
+	mVars->getLcd()->print(protocolToString());
 
-  return this;
+	return this;
 }
 
 DIYCSettings *EditProtocolSettings::upAction()
 {
-  if ( mProtocol+1 < MAX_PROTOCOLS )
-    ++mProtocol;
+	if ( mProtocol+1 < MAX_PROTOCOLS )
+		++mProtocol;
 
-  mVars->printSettings();
-  mVars->getLcd()->setCursor(0,1);
-  mVars->getLcd()->print(protocolToString());
+	mVars->printSettings();
+	mVars->getLcd()->setCursor(0,1);
+	mVars->getLcd()->print(protocolToString());
 
-  return this;
+	return this;
 }
 
 DIYCSettings *EditProtocolSettings::leftAction()
 {
-  return new ProtocolSettings(mVars);
+	return new ProtocolSettings(mVars);
 }
 
 DIYCSettings *EditProtocolSettings::selectAction()
 {
-  mVars->setProtocol(mProtocol);
-  if ( mProtocol != DMX )
-    mVars->setBaudRateRenard();
+	mVars->setProtocol(mProtocol);
+	if ( mProtocol != DMX )
+		mVars->setBaudRateRenard();
 
-  return new ProtocolSettings(mVars);
+	return new ProtocolSettings(mVars);
 }
 
 EditProtocolSettings::~EditProtocolSettings() { }
