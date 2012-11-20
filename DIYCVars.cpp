@@ -297,6 +297,7 @@ void DIYCVars::sendData()
 		}
 		case ( PATTERN ):
 		{
+			//TODO
 			break;
 		}
 	}
