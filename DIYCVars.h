@@ -23,6 +23,8 @@ enum outputs {
 	MANUAL,
 	CHASE,
 	PATTERN,
+	ALL_ON,
+	ALL_OFF,
 	MAX_OUTPUT_TYPES
 };
 

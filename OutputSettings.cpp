@@ -1,6 +1,7 @@
 #include "OutputSettings.h"
 #include "ChannelSettings.h"
 #include "ChaseSpeedSettings.h"
+#include "NumChannelsSettings.h"
 
 OutputSettings::OutputSettings(DIYCVars *vars) : DIYCSettings(vars)
 {
@@ -19,6 +20,9 @@ DIYCSettings *OutputSettings::downAction()
 			return new ChaseSpeedSettings(mVars);
 //		case (PATTERN):
 //			return new OutputPatternSettings(mVars);
+		case (ALL_ON):
+		case (ALL_OFF):
+			return new NumChannelsSettings(mVars);
 	}
 
 	return this;
@@ -44,6 +48,10 @@ const char *EditOutputSettings::outputTypeToString()
 			return "Chase";
 		case PATTERN:
 			return "Pattern";
+		case ALL_ON:
+			return "All On";
+		case ALL_OFF:
+			return "All Off";
 		default:
 			return "ERROR!";
 	}

@@ -89,6 +89,18 @@ void DIYCVars::printSettings()
 			mLcd->print("Pattern");
 			break;
 		}
+		case ( ALL_ON ):
+		{
+			mLcd->print("ON:");
+			mLcd->print(mNumChannels);
+			break;
+		}
+		case ( ALL_OFF ):
+		{
+			mLcd->print("OFF:");
+			mLcd->print(mNumChannels);
+			break;
+		}
 	}
 }
 
@@ -298,6 +310,16 @@ void DIYCVars::sendData()
 		case ( PATTERN ):
 		{
 			//TODO
+			break;
+		}
+		case ( ALL_ON ):
+		{
+			for ( int i = 0; i < mNumChannels; ++i )
+				data[i] = mMaxDimming;
+			break;
+		}
+		case ( ALL_OFF ):
+		{
 			break;
 		}
 	}
