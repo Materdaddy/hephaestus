@@ -145,7 +145,7 @@ void DIYCVars::saveToEeprom()
 
 uint8_t DIYCVars::setProtocol(uint8_t protocol)
 {
-	if ( protocol > 0 && protocol < MAX_PROTOCOLS )
+	if ( protocol >= 0 && protocol < MAX_PROTOCOLS )
 		mProtocol = protocol;
 
 	if ( protocol == DMX )
