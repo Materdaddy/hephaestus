@@ -1,21 +1,6 @@
-Output Type					manual/chase/pattern						done
-Chase Speed					numbers										
-	(if set to chase)													
+TODO:
+
 Output Pattern				all on, all off, fades, groups				
 	(if set to pattern)													
-Current Channel				Numbers 1-max_channel						done
-	(if set to manual)													done
-Num Channels				d:24										done
-Max Dimming Value			d:255										done
-Min Dimming Value			d:0											done
-Output Protocol				DMX/Renard									done
-Baud Rate					192/384/576/1152/DMX						done
-	(if set to renard)													done
-EEPROM Read					confirm										done
-EEPROM Save					confirm										done
-
-TODO:
-* Main loop that acts on settings held in DIYCVars
-* Board Layout
-* SSR Functionality
-* Wrap settings on overflow?
+DMX Address Programming
+Renard Start Address Programming
