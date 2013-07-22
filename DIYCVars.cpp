@@ -331,7 +331,30 @@ void DIYCVars::sendData()
 			Serial.write(0x7E);
 			Serial.write(0x80);
 
-			Serial.write(data, mNumChannels);
+			for ( int i = 0; i < mNumChannels; i++ )
+			{
+				switch (data[i])
+				{
+					case 0x7D:
+						Serial.write(0x7F);
+						Serial.write(0x2F);
+						break;
+
+					case 0x7E:
+						Serial.write(0x7F);
+						Serial.write(0x30);
+						break;
+
+					case 0x7F:
+						Serial.write(0x7F);
+						Serial.write(0x31);
+						break;
+
+					default:
+						Serial.write(data[i]);
+						break;
+				}
+			}
 			break;
 		}
 		case ( DMX ):
