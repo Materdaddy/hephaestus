@@ -27,7 +27,7 @@ public:
 	DIYCSettings *selectAction();
 
 private:
-	uint8_t mNumChannels;
+	uint16_t mNumChannels;
 };
 
 #endif // __NUM_CHANNEL_SETTINGS_H__
