@@ -39,7 +39,7 @@ EditChaseSpeedSettings::EditChaseSpeedSettings(DIYCVars *vars) : DIYCSettings(va
 
 DIYCSettings *EditChaseSpeedSettings::downAction()
 {
-	if ( mDelay > 1000 && mDelay < MAX_DELAY )
+	if ( mDelay > 1000 && mDelay <= MAX_DELAY )
 		mDelay -= 1000;
 	else if ( mDelay > 500 && mDelay <= 1000 )
 		mDelay -= 100;
